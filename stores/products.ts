@@ -21,10 +21,7 @@ export const useProductsStore = defineStore("products", () => {
   const error = ref<string | null>(null);
 
   // Destructuring the return of usePersistState
-  const { state: query, setState: setQuery } = usePersistState<string>(
-    "query",
-    ""
-  );
+  const { state: query } = usePersistState<string>("query", "");
 
   const fetchCategories = async () => {
     isLoading.value = true;

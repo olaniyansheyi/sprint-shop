@@ -42,7 +42,7 @@
           <div
             class="w-fit px-4 py-2 bg-[#F8F8F8] rounded-full flex gap-x-3 items-center justify-center"
           >
-            <button @click="handleDecrement">
+            <button @click="handleDecrement(product?.id)">
               <svg
                 width="24"
                 height="24"
@@ -77,9 +77,9 @@
               </svg>
             </button>
             <p class="text-[#666666] text-[14px] lg:text-[16px]">
-              {{ quantity }}
+              {{ product?.quantity }}
             </p>
-            <button @click="handleIncrement">
+            <button @click="handleIncrement(product?.id)">
               <svg
                 width="24"
                 height="24"
@@ -143,7 +143,7 @@
       </p>
     </div>
 
-    <!-- <Recommended /> -->
+    <Recommended />
   </div>
 </template>
 
@@ -206,9 +206,9 @@ onMounted(async () => {
 });
 
 // Event Handlers
-const handleIncrement = () => quantity.value++;
-const handleDecrement = () => {
-  if (quantity.value > 1) quantity.value--;
+const handleIncrement = (id: number) => cartStore.increaseQuantity(id);
+const handleDecrement = (id: number) => {
+  cartStore.decreaseQuantity(id);
 };
 const onAddToCart = () => {
   if (product.value) {

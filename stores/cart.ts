@@ -14,7 +14,7 @@ export const useCartStore = defineStore("cart", {
   // Initialize the cart using the usePersistState hook
   state: () => {
     const { state: cart } = usePersistState<CartItem[]>("cart", []);
-    return { cart };
+    return { cart: cart.value };
   },
   getters: {
     cartItemCount: (state) => state.cart.length,
@@ -37,13 +37,9 @@ export const useCartStore = defineStore("cart", {
         // Increase quantity if product already exists
         this.cart[productIndex].quantity += 1;
       }
-      // Update the persistent state
-      localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     handleDeleteFromCart(productId: number) {
       this.cart = this.cart.filter((item: CartItem) => item.id !== productId);
-      // Update the persistent state
-      localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     isInCart(productId: number) {
       return this.cart.some(
@@ -54,22 +50,16 @@ export const useCartStore = defineStore("cart", {
       const item = this.cart.find((item: CartItem) => item.id === productId);
       if (item) {
         item.quantity += 1;
-        // Update the persistent state
-        localStorage.setItem("cart", JSON.stringify(this.cart));
       }
     },
     decreaseQuantity(productId: number) {
       const item = this.cart.find((item: CartItem) => item.id === productId);
       if (item && item.quantity > 1) {
         item.quantity -= 1;
-        // Update the persistent state
-        localStorage.setItem("cart", JSON.stringify(this.cart));
       }
     },
     handleClearCart() {
       this.cart = [];
-      // Update the persistent state
-      localStorage.setItem("cart", JSON.stringify(this.cart));
     },
   },
 });

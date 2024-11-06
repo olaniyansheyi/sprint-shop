@@ -10,7 +10,6 @@
           v-for="product in products"
           :key="product.id + product.title"
           :product="product"
-          
         />
       </div>
     </div>
@@ -18,9 +17,7 @@
 </template>
 
 <script setup lang="ts">
-
-
-import { useProductsStore } from '~/stores/products';
+import { useProductsStore } from "~/stores/products";
 
 interface ProductType {
   id: number;
@@ -32,22 +29,19 @@ interface ProductType {
   rating: { rate: number; count: number };
 }
 
-const productsStore  = useProductsStore();
+const productsStore = useProductsStore();
 const products = ref<ProductType[]>([]);
 
 // Fetch recommended products when the component mounts or when query changes
-const fetchProducts = async () => {
-  const data = await productsStore.getRecommendations();
+const fetchProducts = () => {
+  const data = productsStore.getRecommendations;
   products.value = data;
 };
 
 onMounted(() => {
-  productsStore.fetchProducts();
+  fetchProducts();
 });
 
 // Watch for changes in the query to fetch new recommendations
-watch(() => query, fetchProducts);
-
-// Handle navigation to product details (if needed)
-const navigateToProduct = (productId: number) => {
+watch(() => productsStore.query, fetchProducts);
 </script>

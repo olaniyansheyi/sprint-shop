@@ -4,8 +4,8 @@
   >
     <h1 class="text-2xl text-left font-bold mb-4 capitalize">{{ category }}</h1>
     <Products />
-    <!-- <Recommended /> -->
-    <Spinner v-if="isLoading" />
+    <Recommended />
+    <Spinner v-if="productsStore.isLoading" />
   </div>
 </template>
 
